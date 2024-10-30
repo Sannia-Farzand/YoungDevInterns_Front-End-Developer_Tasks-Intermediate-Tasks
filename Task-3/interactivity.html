@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form with Interactive Features</title>
+    <style>
+      /* Basic styling for the form */
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          background-color: #f3f4f6;
+      }
+      form {
+          background: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          width: 80%;
+          max-width: 600px;
+      }
+      h1, p {
+          text-align: left;
+      }
+      label {
+          font-weight: bold;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="number"],
+      select,
+      textarea {
+          width: 100%;
+          padding: 10px;
+          margin-top: 5px;
+          margin-bottom: 15px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+      }
+      button {
+          width: 100%;
+          padding: 10px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+      }
+      button:hover {
+          background-color: #45a049;
+      }
+
+      /* Modal Styles */
+      #modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          justify-content: center;
+          align-items: center;
+      }
+      #modal-content {
+          background: white;
+          padding: 20px;
+          border-radius: 5px;
+          width: 90%;
+          max-width: 400px;
+      }
+      #close-modal {
+          background: red;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          cursor: pointer;
+      }
+
+      /* Dropdown Menu Styles */
+      .dropdown {
+          position: relative;
+          display: inline-block;
+          margin-top: 15px;
+      }
+      .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+      }
+      .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+      }
+      .dropdown-content a:hover {
+          background-color: #f1f1f1;
+      }
+    </style>
+</head>
+<body>
+    <h1 id="title">Survey Form</h1>
+    <p id="description">Please fill out the following survey form.</p>
+  
+    <form id="survey-form">
+      <button type="button" onclick="openModal()">Open Instructions</button>
+
+      <!-- Name Field -->
+      <label id="name-label" for="name">Name:</label>
+      <input id="name" type="text" placeholder="Enter your name" required><br><br>
+  
+      <!-- Email Field -->
+      <label id="email-label" for="email">Email:</label>
+      <input id="email" type="email" placeholder="Enter your email" required><br><br>
+  
+      <!-- Number Field -->
+      <label id="number-label" for="number">Age:</label>
+      <input id="number" type="number" min="18" max="100" placeholder="e.g., 25" required><br><br>
+
+      <!-- Dropdown Field -->
+      <label for="dropdown">Which option best describes you:</label>
+      <select id="dropdown" required>
+        <option value="" disabled selected>Select an option</option>
+        <option value="student">Student</option>
+        <option value="professional">Professional</option>
+      </select><br><br>
+    <!-- Radio Buttons -->
+    <label>Gender:</label><br>
+    <label><input type="radio" name="gender" value="male" required> Male</label><br>
+    <label><input type="radio" name="gender" value="female" required> Female</label><br><br>
+
+    <!-- Checkboxes -->
+    <label>Select your interests:</label><br>
+    <label><input type="checkbox" name="interest" value="coding"> Coding</label><br>
+    <label><input type="checkbox" name="interest" value="design"> Design</label><br><br>
+
+      <!-- Dropdown Menu Trigger -->
+      <div class="dropdown">
+          <button type="button" onclick="toggleDropdown()">More Options</button>
+          <div class="dropdown-content" id="dropdown-menu">
+              <a href="#">Resource 1</a>
+              <a href="#">Resource 2</a>
+              <a href="#">Resource 3</a>
+          </div>
+      </div><br><br>
+  
+      <button id="submit" type="submit">Submit</button>
+    </form> 
+
+    <!-- Modal Popup -->
+    <div id="modal">
+        <div id="modal-content">
+            <h2>Instructions</h2>
+            <p>Please ensure all information is correct before submitting the form.</p>
+            <button id="close-modal" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Modal Functions
+        function openModal() {
+            document.getElementById("modal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        // Dropdown Menu Function
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdown-menu");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        // Close modal if clicked outside content
+        window.onclick = function(event) {
+            const modal = document.getElementById("modal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+        document.getElementById('survey-form').addEventListener('submit', function(event) {
+            // Validate Name
+            const name = document.getElementById('name').value;
+            if (name.trim() === '') {
+              alert('Please enter your name.');
+              event.preventDefault();
+              return;
+            }
+    
+            // Validate Email
+            const email = document.getElementById('email').value;
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,6}$/;
+            if (!emailPattern.test(email)) {
+              alert('Please enter a valid email address.');
+              event.preventDefault();
+              return;
+            }
+    
+            // Validate Age
+            const age = document.getElementById('number').value;
+            if (age < 18 || age > 100) {
+              alert('Age must be between 18 and 100.');
+              event.preventDefault();
+              return;
+            }
+    
+            // Validate Dropdown
+            const dropdown = document.getElementById('dropdown').value;
+            if (dropdown === '') {
+              alert('Please select an option that best describes you.');
+              event.preventDefault();
+              return;
+            }
+    
+            // Validate Gender
+            const gender = document.querySelector('input[name="gender"]:checked');
+            if (!gender) {
+              alert('Please select your gender.');
+              event.preventDefault();
+              return;
+            }
+    
+            // Validate Interests
+            const interests = document.querySelectorAll('input[name="interest"]:checked');
+            if (interests.length === 0) {
+              alert('Please select at least one interest.');
+              event.preventDefault();
+              return;
+            }
+    
+            // If all validations pass
+            alert('Form submitted successfully!');
+          });
+    </script>
+</body>
+</html>
+
