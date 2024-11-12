@@ -3,246 +3,401 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survey Form with Interactive Features</title>
+    <title>Interactive Elements</title>
     <style>
-      /* Basic styling for the form */
-      body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-          justify-content: center;
-          align-items: center;
-          min-height: 100vh;
-          background-color: #f3f4f6;
-      }
-      form {
-          background: #fff;
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-          width: 80%;
-          max-width: 600px;
-      }
-      h1, p {
-          text-align: left;
-      }
-      label {
-          font-weight: bold;
-      }
-      input[type="text"],
-      input[type="email"],
-      input[type="number"],
-      select,
-      textarea {
-          width: 100%;
-          padding: 10px;
-          margin-top: 5px;
-          margin-bottom: 15px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-      }
-      button {
-          width: 100%;
-          padding: 10px;
-          background-color: #4CAF50;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 16px;
-      }
-      button:hover {
-          background-color: #45a049;
-      }
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      /* Modal Styles */
-      #modal {
-          display: none;
-          position: fixed;
-          z-index: 1000;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.5);
-          justify-content: center;
-          align-items: center;
-      }
-      #modal-content {
-          background: white;
-          padding: 20px;
-          border-radius: 5px;
-          width: 90%;
-          max-width: 400px;
-      }
-      #close-modal {
-          background: red;
-          color: white;
-          border: none;
-          padding: 5px 10px;
-          cursor: pointer;
-      }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
 
-      /* Dropdown Menu Styles */
-      .dropdown {
-          position: relative;
-          display: inline-block;
-          margin-top: 15px;
-      }
-      .dropdown-content {
-          display: none;
-          position: absolute;
-          background-color: #f9f9f9;
-          min-width: 160px;
-          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-          z-index: 1;
-      }
-      .dropdown-content a {
-          color: black;
-          padding: 12px 16px;
-          text-decoration: none;
-          display: block;
-      }
-      .dropdown-content a:hover {
-          background-color: #f1f1f1;
-      }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            z-index: 1001;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            z-index: 100;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f4f4f4;
+        }
+
+        /* Tab Styles */
+        .tabs {
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            border-bottom: 2px solid #3498db;
+            color: #3498db;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Toast Notification Styles */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 300px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            background-color: #2ecc71;
+        }
+
+        .toast.error {
+            background-color: #e74c3c;
+        }
+
+        .toast.info {
+            background-color: #3498db;
+        }
+
+        .close-toast {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Form in Modal */
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .tab-buttons {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                width: 100%;
+                text-align: left;
+            }
+
+            .toast {
+                min-width: auto;
+                width: calc(100vw - 40px);
+            }
+        }
     </style>
 </head>
 <body>
-    <h1 id="title">Survey Form</h1>
-    <p id="description">Please fill out the following survey form.</p>
-  
-    <form id="survey-form">
-      <button type="button" onclick="openModal()">Open Instructions</button>
+    <div class="container">
+        <h1>Interactive Elements Demo</h1>
 
-      <!-- Name Field -->
-      <label id="name-label" for="name">Name:</label>
-      <input id="name" type="text" placeholder="Enter your name" required><br><br>
-  
-      <!-- Email Field -->
-      <label id="email-label" for="email">Email:</label>
-      <input id="email" type="email" placeholder="Enter your email" required><br><br>
-  
-      <!-- Number Field -->
-      <label id="number-label" for="number">Age:</label>
-      <input id="number" type="number" min="18" max="100" placeholder="e.g., 25" required><br><br>
+        <!-- Modal Button -->
+        <button class="btn btn-primary" id="openModal">Open Modal</button>
 
-      <!-- Dropdown Field -->
-      <label for="dropdown">Which option best describes you:</label>
-      <select id="dropdown" required>
-        <option value="" disabled selected>Select an option</option>
-        <option value="student">Student</option>
-        <option value="professional">Professional</option>
-      </select><br><br>
-    <!-- Radio Buttons -->
-    <label>Gender:</label><br>
-    <label><input type="radio" name="gender" value="male" required> Male</label><br>
-    <label><input type="radio" name="gender" value="female" required> Female</label><br><br>
+        <!-- Dropdown -->
+        <div class="dropdown">
+            <button class="btn btn-primary" id="dropdownBtn">Dropdown Menu ▼</button>
+            <div class="dropdown-content" id="dropdownContent">
+                <a href="#">Option 1</a>
+                <a href="#">Option 2</a>
+                <a href="#">Option 3</a>
+            </div>
+        </div>
 
-    <!-- Checkboxes -->
-    <label>Select your interests:</label><br>
-    <label><input type="checkbox" name="interest" value="coding"> Coding</label><br>
-    <label><input type="checkbox" name="interest" value="design"> Design</label><br><br>
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="tab1">Tab 1</button>
+                <button class="tab-btn" data-tab="tab2">Tab 2</button>
+                <button class="tab-btn" data-tab="tab3">Tab 3</button>
+            </div>
+            <div class="tab-content active" id="tab1">
+                <h3>Tab 1 Content</h3>
+                <p>This is the content for tab 1. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+            <div class="tab-content" id="tab2">
+                <h3>Tab 2 Content</h3>
+                <p>This is the content for tab 2. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+            <div class="tab-content" id="tab3">
+                <h3>Tab 3 Content</h3>
+                <p>This is the content for tab 3. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+            </div>
+        </div>
 
-      <!-- Dropdown Menu Trigger -->
-      <div class="dropdown">
-          <button type="button" onclick="toggleDropdown()">More Options</button>
-          <div class="dropdown-content" id="dropdown-menu">
-              <a href="#">Resource 1</a>
-              <a href="#">Resource 2</a>
-              <a href="#">Resource 3</a>
-          </div>
-      </div><br><br>
-  
-      <button id="submit" type="submit">Submit</button>
-    </form> 
-
-    <!-- Modal Popup -->
-    <div id="modal">
-        <div id="modal-content">
-            <h2>Instructions</h2>
-            <p>Please ensure all information is correct before submitting the form.</p>
-            <button id="close-modal" onclick="closeModal()">Close</button>
+        <!-- Toast Notification Buttons -->
+        <div style="margin-top: 20px;">
+            <button class="btn btn-primary" onclick="showToast('Success message!', 'success')">Show Success Toast</button>
+            <button class="btn btn-primary" onclick="showToast('Error message!', 'error')">Show Error Toast</button>
+            <button class="btn btn-primary" onclick="showToast('Info message!', 'info')">Show Info Toast</button>
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Modal Title</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-content">
+                <form class="modal-form" id="modalForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <script>
-        // Modal Functions
-        function openModal() {
-            document.getElementById("modal").style.display = "flex";
-        }
+        // Modal Functionality
+        const modalOverlay = document.getElementById('modalOverlay');
+        const openModalBtn = document.getElementById('openModal');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const modalForm = document.getElementById('modalForm');
 
-        function closeModal() {
-            document.getElementById("modal").style.display = "none";
-        }
+        openModalBtn.addEventListener('click', () => {
+            modalOverlay.style.display = 'block';
+        });
 
-        // Dropdown Menu Function
-        function toggleDropdown() {
-            const dropdown = document.getElementById("dropdown-menu");
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        }
+        closeModalBtn.addEventListener('click', () => {
+            modalOverlay.style.display = 'none';
+        });
 
-        // Close modal if clicked outside content
-        window.onclick = function(event) {
-            const modal = document.getElementById("modal");
-            if (event.target === modal) {
-                modal.style.display = "none";
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
             }
+        });
+
+        modalForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Form submitted successfully!', 'success');
+            modalOverlay.style.display = 'none';
+        });
+
+        // Dropdown Functionality
+        const dropdownBtn = document.getElementById('dropdownBtn');
+        const dropdownContent = document.getElementById('dropdownContent');
+
+        dropdownBtn.addEventListener('click', () => {
+            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!dropdownBtn.contains(e.target)) {
+                dropdownContent.style.display = 'none';
+            }
+        });
+
+        // Tabs Functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Toast Notification Functionality
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button class="close-toast">&times;</button>
+            `;
+
+            const toastContainer = document.getElementById('toastContainer');
+            toastContainer.appendChild(toast);
+
+            // Trigger reflow to enable transition
+            toast.offsetHeight;
+            toast.classList.add('show');
+
+            // Add close button functionality
+            const closeBtn = toast.querySelector('.close-toast');
+            closeBtn.addEventListener('click', () => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            });
+
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 3000);
         }
-        document.getElementById('survey-form').addEventListener('submit', function(event) {
-            // Validate Name
-            const name = document.getElementById('name').value;
-            if (name.trim() === '') {
-              alert('Please enter your name.');
-              event.preventDefault();
-              return;
-            }
-    
-            // Validate Email
-            const email = document.getElementById('email').value;
-            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,6}$/;
-            if (!emailPattern.test(email)) {
-              alert('Please enter a valid email address.');
-              event.preventDefault();
-              return;
-            }
-    
-            // Validate Age
-            const age = document.getElementById('number').value;
-            if (age < 18 || age > 100) {
-              alert('Age must be between 18 and 100.');
-              event.preventDefault();
-              return;
-            }
-    
-            // Validate Dropdown
-            const dropdown = document.getElementById('dropdown').value;
-            if (dropdown === '') {
-              alert('Please select an option that best describes you.');
-              event.preventDefault();
-              return;
-            }
-    
-            // Validate Gender
-            const gender = document.querySelector('input[name="gender"]:checked');
-            if (!gender) {
-              alert('Please select your gender.');
-              event.preventDefault();
-              return;
-            }
-    
-            // Validate Interests
-            const interests = document.querySelectorAll('input[name="interest"]:checked');
-            if (interests.length === 0) {
-              alert('Please select at least one interest.');
-              event.preventDefault();
-              return;
-            }
-    
-            // If all validations pass
-            alert('Form submitted successfully!');
-          });
     </script>
 </body>
 </html>
-
