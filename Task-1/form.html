@@ -1,108 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survey Form</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #e0e4f7;
+     
+    }
+
+    .form-container {
+      background: #f0f2ff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 80%;
+      max-width: 600px;
+    }
+
+    h1, p {
+      text-align: left;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .form-field {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .form-checkbox, .form-radio {
+      margin-right: 5px;
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 10px;
+      background-color: #246bf0;
+      color: rgb(255, 255, 255);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .form-submit:hover {
+      background-color: #0004ff;
+    }
+
+    .error-message {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    /* Media Queries for Responsive Design */
+    @media (max-width: 768px) {
+      .form-container {
+        width: 90%;
+        padding: 15px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+      p {
+        font-size: 1em;
+      }
+      .form-submit {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5em;
+      }
+      p {
+        font-size: 0.9em;
+      }
+      .form-field, .form-submit {
+        font-size: 14px;
+      }
+      .form-submit {
+        padding: 8px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="form-container">
     <h1 id="title">Survey Form</h1>
     <p id="description">Please fill out the following survey form.</p>
-  
-    <form id="survey-form">
+
+    <form id="survey-form" onsubmit="return validateForm()">
+      <div class="error-message" id="error-message"></div>
+
       <!-- Name Field -->
       <label id="name-label" for="name">Name:</label>
-      <input id="name" type="text" placeholder="Enter your name" required><br><br>
-  
+      <input id="name" class="form-field" type="text" placeholder="Enter your name" required>
+
       <!-- Email Field -->
       <label id="email-label" for="email">Email:</label>
-      <input id="email" type="email" placeholder="Enter your email" required><br><br>
-  
+      <input id="email" class="form-field" type="email" placeholder="Enter your email" required>
+
       <!-- Number Field -->
       <label id="number-label" for="number">Age:</label>
-      <input id="number" type="number" min="18" max="100" placeholder="e.g., 25" required><br><br>
-  
+      <input id="number" class="form-field" type="number" min="18" max="100" placeholder="e.g., 25" required>
+
       <!-- Dropdown Field -->
       <label for="dropdown">Which option best describes you:</label>
-      <select id="dropdown" required>
+      <select id="dropdown" class="form-field" required>
         <option value="" disabled selected>Select an option</option>
         <option value="student">Student</option>
         <option value="professional">Professional</option>
-      </select><br><br>
-  
+      </select>
+
       <!-- Radio Buttons -->
-      <label>Gender:</label><br>
-      <label><input type="radio" name="gender" value="male" required> Male</label><br>
-      <label><input type="radio" name="gender" value="female" required> Female</label><br><br>
-  
+      <label>Gender:</label>
+      <div>
+        <label><input class="form-radio" type="radio" name="gender" value="male" required> Male</label>
+        <label><input class="form-radio" type="radio" name="gender" value="female" required> Female</label>
+      </div>
+
       <!-- Checkboxes -->
-      <label>Select your interests:</label><br>
-      <label><input type="checkbox" name="interest" value="coding"> Coding</label><br>
-      <label><input type="checkbox" name="interest" value="design"> Design</label><br><br>
-  
+      <label>Select your interests:</label>
+      <div>
+        <label><input class="form-checkbox" type="checkbox" name="interest" value="coding"> Coding</label>
+        <label><input class="form-checkbox" type="checkbox" name="interest" value="design"> Design</label>
+      </div>
+
       <!-- Textarea Field -->
-      <label for="comments">Additional Comments:</label><br>
-      <textarea id="comments" name="comments" rows="4" cols="50" placeholder="Enter your comments"></textarea><br><br>
-  
+      <label for="comments">Additional Comments:</label>
+      <textarea id="comments" class="form-field" name="comments" rows="4" cols="50" placeholder="Enter your comments"></textarea>
+
       <!-- Submit Button -->
-      <button id="submit" type="submit">Submit</button>
-    </form> 
+      <button class="form-submit" id="submit" type="submit">Submit</button>
+    </form>
+  </div>
 
-    <script>
-      document.getElementById('survey-form').addEventListener('submit', function(event) {
-        // Validate Name
-        const name = document.getElementById('name').value;
-        if (name.trim() === '') {
-          alert('Please enter your name.');
-          event.preventDefault();
-          return;
-        }
+  <script>
+    function validateForm() {
+      const errorMessage = document.getElementById('error-message');
+      errorMessage.textContent = '';
 
-        // Validate Email
-        const email = document.getElementById('email').value;
-        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,6}$/;
-        if (!emailPattern.test(email)) {
-          alert('Please enter a valid email address.');
-          event.preventDefault();
-          return;
-        }
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const age = parseInt(document.getElementById('number').value);
+      const dropdown = document.getElementById('dropdown').value;
+      const gender = document.querySelector('input[name="gender"]:checked');
+      const interests = document.querySelectorAll('input[name="interest"]:checked');
 
-        // Validate Age
-        const age = document.getElementById('number').value;
-        if (age < 18 || age > 100) {
-          alert('Age must be between 18 and 100.');
-          event.preventDefault();
-          return;
-        }
+      // Validate Name
+      if (name === '') {
+        errorMessage.textContent = 'Please enter your name.';
+        return false;
+      }
 
-        // Validate Dropdown
-        const dropdown = document.getElementById('dropdown').value;
-        if (dropdown === '') {
-          alert('Please select an option that best describes you.');
-          event.preventDefault();
-          return;
-        }
+      // Validate Email
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        errorMessage.textContent = 'Please enter a valid email address.';
+        return false;
+      }
 
-        // Validate Gender
-        const gender = document.querySelector('input[name="gender"]:checked');
-        if (!gender) {
-          alert('Please select your gender.');
-          event.preventDefault();
-          return;
-        }
+      // Validate Age
+      if (isNaN(age) || age < 18 || age > 100) {
+        errorMessage.textContent = 'Age must be between 18 and 100.';
+        return false;
+      }
 
-        // Validate Interests
-        const interests = document.querySelectorAll('input[name="interest"]:checked');
-        if (interests.length === 0) {
-          alert('Please select at least one interest.');
-          event.preventDefault();
-          return;
-        }
+      // Validate Dropdown
+      if (dropdown === '') {
+        errorMessage.textContent = 'Please select an option that best describes you.';
+        return false;
+      }
 
-        // If all validations pass
-        alert('Form submitted successfully!');
-      });
-    </script>
+      // Validate Gender
+      if (!gender) {
+        errorMessage.textContent = 'Please select your gender.';
+        return false;
+      }
+
+      // Validate Interests
+      if (interests.length === 0) {
+        errorMessage.textContent = 'Please select at least one interest.';
+        return false;
+      }
+
+      // If all validations pass
+      alert('Form submitted successfully!');
+      return true;
+    }
+  </script>
 </body>
 </html>
-
